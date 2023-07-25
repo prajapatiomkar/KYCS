@@ -20,6 +20,8 @@ import PrivateRoute from "./components/PrivateRoute.jsx";
 import "react-toastify/dist/ReactToastify.css";
 import CredentialCardField from "./components/CredentialCardField";
 import CredentialCardForm from "./components/CredentialCardForm";
+import CredentialWrapper from "./components/CredentialWrapper";
+import AddAccount from "./components/AddAccount";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -29,8 +31,8 @@ const router = createBrowserRouter(
       <Route path="/register" element={<RegisterScreen />} />
       <Route path="" element={<PrivateRoute />}>
         <Route path="/profile" element={<ProfileScreen />} />
-        <Route path="/credential" element={<CredentialCardField />} />
-        <Route path="/credential/:id" element={<CredentialCardForm />} />
+        <Route path="/add-account" element={<AddAccount />} />
+        <Route path="/credential/:id" element={<CredentialWrapper />} />
       </Route>
     </Route>
   )

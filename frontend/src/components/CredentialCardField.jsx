@@ -1,30 +1,11 @@
-import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { useLoginMutation } from "../slices/usersApiSlice";
-import { toast } from "react-toastify";
-import { setCredentials } from "../slices/authSlice";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
 import { BsArrowLeft } from "react-icons/bs";
 
-export default function CredentialCardField() {
-  const { register, handleSubmit } = useForm();
+export default function CredentialCardField({ stateToggler }) {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
-  const [login, { isLoading }] = useLoginMutation();
-  const { userInfo } = useSelector((state) => state.auth);
-
-  const onSubmitHandler = async (data) => {
-    try {
-      const res = await login(data).unwrap();
-      dispatch(setCredentials({ ...res }));
-      navigate("/");
-    } catch (err) {
-      toast.error(err?.data?.message || err.error);
-    }
-  };
   return (
     <section className="text-gray-600 body-font py-5 lg:py-15">
       <div className="container  py-2 mx-auto flex justify-center  sm:flex-nowrap flex-wrap">
@@ -44,7 +25,8 @@ export default function CredentialCardField() {
               Email
             </label>
             <input
-              {...register("email")}
+              value={"sample"}
+              // value={}
               type="email"
               id="email"
               name="email"
@@ -59,7 +41,7 @@ export default function CredentialCardField() {
               Password
             </label>
             <input
-              {...register("password")}
+              // value={userCredential.password}
               type="password"
               id="password"
               name="password"
@@ -68,7 +50,10 @@ export default function CredentialCardField() {
           </div>
 
           <div className="flex gap-5">
-            <button className="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg" onClick={()=>navigate("/credential/011230")}>
+            <button
+              className="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"
+              onClick={() => stateToggler()}
+            >
               Edit
             </button>
             <button className="text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded text-lg">

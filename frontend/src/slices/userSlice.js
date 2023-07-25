@@ -1,12 +1,14 @@
-import { apiSlice } from "./apiSlice";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const USER_URL = "http://localhost:4000/api/users";
-
-export const usersApiSlice = apiSlice.injectEndpoints({
+export const userApi = createApi({
+  reducerPath: "userApi",
+  baseQuery: fetchBaseQuery({
+    baseUrl: "/api/users",
+  }),
   endpoints: (builder) => ({
     login: builder.mutation({
       query: (data) => ({
-        url: `${USER_URL}/auth`,
+        url: `/auth`,
         method: "POST",
         body: data,
       }),
@@ -14,7 +16,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
 
     register: builder.mutation({
       query: (data) => ({
-        url: `${USER_URL}`,
+        url: `/`,
         method: "POST",
         body: data,
       }),
@@ -22,14 +24,14 @@ export const usersApiSlice = apiSlice.injectEndpoints({
 
     logout: builder.mutation({
       query: () => ({
-        url: `${USER_URL}/logout`,
+        url: `/logout`,
         method: "POST",
       }),
     }),
 
     updateUser: builder.mutation({
       query: (data) => ({
-        url: `${USER_URL}/profile`,
+        url: `/profile`,
         method: "PUT",
         body: data,
       }),
@@ -42,4 +44,4 @@ export const {
   useLogoutMutation,
   useRegisterMutation,
   useUpdateUserMutation,
-} = usersApiSlice;
+} = userApi;

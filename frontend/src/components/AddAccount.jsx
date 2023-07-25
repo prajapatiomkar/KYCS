@@ -3,38 +3,29 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-// import { useRegisterMutation } from "../slices/usersApiSlice";
-import { setCredentials } from "../slices/authSlice";
-import { useRegisterMutation } from "../slices/userSlice";
 
-export default function RegisterScreen() {
-  const { userInfo } = useSelector((state) => state.auth);
+import { useCreateCredentialMutation } from "../slices/credentialSlice";
+
+export default function AddAccount() {
   const { register, handleSubmit } = useForm();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [registerMutation, { isLoading }] = useRegisterMutation();
+
+  const [credentialMutation] = useCreateCredentialMutation();
 
   const onSubmitHandler = async (data) => {
-    if (data.password !== data.confirmpassword) {
-      toast.error("Passwords do not match");
-      return;
-    } else {
+    if (data) {
       try {
-        const res = await registerMutation(data).unwrap();
-        dispatch(setCredentials(res));
+        await credentialMutation(data).unwrap();
         navigate("/");
-        toast.success("Registered Successfully");
+        toast.success("Account Added Successfully");
       } catch (err) {
         toast.error(err?.data?.message || err.error);
       }
+    } else {
+      toast.error("Please fill all the fields");
     }
   };
 
-  useEffect(() => {
-    if (userInfo) {
-      navigate("/");
-    }
-  }, [navigate, userInfo]);
   return (
     <section className="text-gray-600 body-font py-5 lg:py-15">
       <div className="container  py-2 mx-auto flex justify-center  sm:flex-nowrap flex-wrap">
@@ -43,17 +34,18 @@ export default function RegisterScreen() {
           className=" w-5/6 lg:w-1/3 bg-white flex flex-col border p-6   md:py-8 mt-8 md:mt-0"
         >
           <h2 className="text-gray-900 text-lg mb-1  title-font  text-center">
-            Register yourself!
+            Add Account!
           </h2>
-          <div className="relative mb-4 mt-5">
-            <label htmlFor="name" className="leading-7 text-sm text-gray-600">
-              Name
+
+          <div className="relative mb-4 ">
+            <label htmlFor="title" className="leading-7 text-sm text-gray-600">
+              Title
             </label>
             <input
-              {...register("name")}
+              {...register("title")}
               type="text"
-              id="name"
-              name="name"
+              id="title"
+              name="title"
               className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
             />
           </div>
@@ -66,6 +58,18 @@ export default function RegisterScreen() {
               type="email"
               id="email"
               name="email"
+              className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+            />
+          </div>
+          <div className="relative mb-4 ">
+            <label htmlFor="url" className="leading-7 text-sm text-gray-600">
+              URL
+            </label>
+            <input
+              {...register("url")}
+              type="text"
+              id="url"
+              name="url"
               className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
             />
           </div>
@@ -86,32 +90,23 @@ export default function RegisterScreen() {
           </div>
           <div className="relative mb-4">
             <label
-              htmlFor="confirmpassword"
+              htmlFor="description"
               className="leading-7 text-sm text-gray-600"
             >
-              Confirm Password
+              Description
             </label>
-            <input
-              {...register("confirmpassword")}
-              type="password"
-              id="confirmpassword"
-              name="confirmpassword"
+            <textarea
+              {...register("description")}
+              type="text"
+              id="description"
+              name="description"
               className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
             />
           </div>
 
           <button className="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">
-            Register
+            Add Account
           </button>
-          <p className="text-xs text-gray-500 mt-3">
-            Already a user?{" "}
-            <Link
-              className="underline text-blue-600 hover:text-blue-800 visited:text-purple-600"
-              to="/login"
-            >
-              Login
-            </Link>
-          </p>
         </form>
       </div>
     </section>

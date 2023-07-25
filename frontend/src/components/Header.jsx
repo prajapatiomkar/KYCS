@@ -1,7 +1,10 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { useLogoutMutation } from "../slices/usersApiSlice";
+// import { useLogoutMutation } from "../slices/usersApiSlice";
+
+import { useLogoutMutation } from "../slices/userSlice"
+
 import { logout } from "../slices/authSlice";
 import { toast } from "react-toastify";
 
@@ -32,8 +35,11 @@ export default function Header() {
               <Link to="/" className="text-gray-700 ">
                 Home
               </Link>
+              <Link to="/add-account" className="text-gray-700">
+                Add Account
+              </Link>
               <Link className="text-gray-700 " onClick={logoutHandler}>
-                logout
+                Logout
               </Link>
             </>
           ) : (

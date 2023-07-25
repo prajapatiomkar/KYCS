@@ -1,6 +1,7 @@
 import asyncHandler from "express-async-handler";
 import userModel from "../models/userModel.js";
 import generateToken from "../utils/generateToken.js";
+import credentialModel from "../models/credentialModel.js";
 
 // @desc   Auth user / Set token
 // @route  Post /api/users/auth
@@ -100,7 +101,39 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   } else {
     res.status(404).json({ message: "User not found" });
   }
+});
 
+//Credentials
+
+// @desc Create a save encrypted Credential
+// @route POST /api/users/credentials
+// @access Private
+
+// {name: 'omkar', email: 'test@gmail.com', url: 'https://www.youtube.com/', password: 'omkar', description: 'omkar'}
+const createCredential = asyncHandler(async (req, res) => {
+  const { title, email, password, url, description } = req.body;
+  const credential = {
+    title,
+    email,
+    password,
+    url,
+    description,
+  };
+  const newCredential = await credentialModel.create(credential);
+  if (newCredential) {
+    res.status(201).json({ message: "Credential created successfully" });
+  } else {
+    res.status(400).json({ message: "Error Occured" });
+  }
+});
+
+const getCredential = asyncHandler(async (req, res) => {
+  const credentials = await credentialModel.find({});
+  if (credentials) {
+    res.status(200).json(credentials);
+  } else {
+    res.status(404).json({ message: "Credentials not found" });
+  }
 });
 
 export {
@@ -109,4 +142,6 @@ export {
   logoutUser,
   getUserProfile,
   updateUserProfile,
+  createCredential,
+  getCredential,
 };

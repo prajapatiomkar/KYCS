@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { useLoginMutation } from "../slices/usersApiSlice";
+import { useLoginMutation } from "../slices/userSlice";
 import { toast } from "react-toastify";
 import { setCredentials } from "../slices/authSlice";
 
-export default function CredentialCardForm() {
+export default function CredentialCardForm({ stateToggler }) {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -14,24 +14,19 @@ export default function CredentialCardForm() {
   const [login, { isLoading }] = useLoginMutation();
   const { userInfo } = useSelector((state) => state.auth);
 
-
-
-  const onSubmitHandler = async (data) => {
-    try {
-      const res = await login(data).unwrap();
-      dispatch(setCredentials({ ...res }));
-      navigate("/");
-    } catch (err) {
-      toast.error(err?.data?.message || err.error);
-    }
-  };
+  // const onSubmitHandler = async (data) => {
+  //   try {
+  //     const res = await login(data).unwrap();
+  //     dispatch(setCredentials({ ...res }));
+  //     navigate("/");
+  //   } catch (err) {
+  //     toast.error(err?.data?.message || err.error);
+  //   }
+  // };
   return (
     <section className="text-gray-600 body-font py-5 lg:py-15">
       <div className="container  py-2 mx-auto flex justify-center  sm:flex-nowrap flex-wrap">
-        <form
-          onSubmit={handleSubmit(onSubmitHandler)}
-          className=" w-5/6 lg:w-1/3 bg-white flex flex-col border p-6   md:py-8 mt-8 md:mt-0"
-        >
+        <div className="w-5/6 lg:w-1/3 bg-white flex flex-col border p-6   md:py-8 mt-8 md:mt-0">
           <h2 className="text-gray-900 text-lg mb-1 title-font  text-center">
             CredentialCardForm
           </h2>
@@ -64,19 +59,18 @@ export default function CredentialCardForm() {
             />
           </div>
 
-          <button className="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">
-            Login
-          </button>
-          <p className="text-xs text-gray-500 mt-3">
-            Not a register user?{" "}
-            <Link
-              className="underline text-blue-600 hover:text-blue-800 visited:text-purple-600"
-              to="/register"
+          <div className="flex gap-5">
+            <button className="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">
+              Save
+            </button>
+            <button
+              className="text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded text-lg"
+              onClick={() => stateToggler()}
             >
-              Register
-            </Link>
-          </p>
-        </form>
+              Cancel
+            </button>
+          </div>
+        </div>
       </div>
     </section>
   );

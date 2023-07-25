@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { useLoginMutation } from "../slices/usersApiSlice";
+import { useLoginMutation } from "../slices/userSlice";
 import { toast } from "react-toastify";
 import { setCredentials } from "../slices/authSlice";
 

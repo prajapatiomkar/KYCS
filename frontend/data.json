@@ -1,0 +1,42 @@
+[
+  {
+    "_id":"41048a46f4b6b6f3",
+    "email": "omkar@gmail.com",
+    "password": "123456",
+    "title": "Google",
+    "description": "Google account",
+    "url": "www.google.com"
+  },
+  {
+    "_id":"fd496578c519b589",
+    "email": "ashish@gmail.com",
+    "password": "123456",
+    "title": "Facebook",
+    "description": "Facebook account",
+    "url": "www.facebook.com"
+  },
+  {
+    "_id":"96c912db8774ee52",
+    "email": "shivam@gmail.com",
+    "password": "123456",
+    "title": "Netflix",
+    "description": "Netflix account",
+    "url": "www.netflix.com"
+  },
+  {
+    "_id":"c7e1a8573f882920",
+    "email": "kunal@gmail.com",
+    "password": "123456",
+    "title": "Youtube",
+    "description": "Youtube account",
+    "url": "www.youtube.com"
+  },
+  {
+    "_id":"47ffe173ffaf81fc",
+    "email": "raj@gmail.com",
+    "password": "123456",
+    "title": "Yahoo",
+    "description": "Yahoo account",
+    "url": "www.yahoo.com"
+  }
+]
