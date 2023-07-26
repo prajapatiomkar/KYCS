@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const credentialApi = createApi({
   reducerPath: "credentialApi",
+  tagTypes: ["credential"],
   baseQuery: fetchBaseQuery({
     baseUrl: "/api/users/credential",
   }),
@@ -11,6 +12,13 @@ export const credentialApi = createApi({
         url: "/",
         method: "GET",
       }),
+      providesTags: ["credential"],
+    }),
+    getCredentialsById: builder.query({
+      query: (id) => ({
+        url: `/${id}`,
+        method: "GET",
+      }),
     }),
     createCredential: builder.mutation({
       query: (data) => ({
@@ -18,9 +26,21 @@ export const credentialApi = createApi({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["credential"],
+    }),
+    deleteCredential: builder.mutation({
+      query: (id) => ({
+        url: `/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["credential"],
     }),
   }),
 });
 
-export const { useGetAllCredentialsQuery, useCreateCredentialMutation } =
-  credentialApi;
+export const {
+  useGetAllCredentialsQuery,
+  useCreateCredentialMutation,
+  useGetCredentialsByIdQuery,
+  useDeleteCredentialMutation,
+} = credentialApi;

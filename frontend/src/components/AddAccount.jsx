@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, redirect, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { useCreateCredentialMutation } from "../slices/credentialSlice";
@@ -17,6 +17,7 @@ export default function AddAccount() {
       try {
         await credentialMutation(data).unwrap();
         navigate("/");
+        // redirect("/");
         toast.success("Account Added Successfully");
       } catch (err) {
         toast.error(err?.data?.message || err.error);

@@ -10,6 +10,8 @@ import {
   updateUserProfile,
   createCredential,
   getCredential,
+  getCredentialById,
+  deleteCredential,
 } from "../controllers/userController.js";
 import { protect } from "../middleware/authMiddleware.js";
 
@@ -28,6 +30,12 @@ router
 router
   .route("/credential")
   .get(protect, getCredential)
-  .post(protect, createCredential);
+  .post(protect, createCredential)
+  .delete(protect, deleteCredential);
+
+router
+  .route("/credential/:id")
+  .get(protect, getCredentialById)
+  .delete(protect, deleteCredential);
 
 export default router;

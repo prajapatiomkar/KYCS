@@ -136,6 +136,23 @@ const getCredential = asyncHandler(async (req, res) => {
   }
 });
 
+const getCredentialById = asyncHandler(async (req, res) => {
+  const credential = await credentialModel.findById(req.params.id);
+  if (credential) {
+    res.status(200).json(credential);
+  } else {
+    res.status(404).json({ message: "Credential not found" });
+  }
+});
+
+const deleteCredential = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+  const result = await credentialModel.findByIdAndDelete(id);
+  if (result) {
+    res.status(200).json({ result });
+  }
+});
+
 export {
   authUser,
   registerUser,
@@ -144,4 +161,6 @@ export {
   updateUserProfile,
   createCredential,
   getCredential,
+  getCredentialById,
+  deleteCredential,
 };

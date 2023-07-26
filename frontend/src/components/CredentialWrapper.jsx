@@ -10,12 +10,13 @@ export default function CredentialWrapper() {
   };
   return (
     <div>
-      {credentialCardToggle ? (
+      {/* {credentialCardToggle ? (
         <CredentialCardForm stateToggler={stateToggler}  />
       ) : (
         <CredentialCardField stateToggler={stateToggler} />
       )}
-      {/* True CredentialCardField False CredentialCardForm */}
+      True CredentialCardField False CredentialCardForm */}
+      <CredentialCardField/>
     </div>
   );
 }

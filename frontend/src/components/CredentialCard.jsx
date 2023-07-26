@@ -19,9 +19,15 @@ export default function CredentialCard() {
     navigation(`/credential/${id}`);
   };
 
+  useEffect(() => {}, [navigation]);
+  console.log(data);
   return (
     <div className="flex flex-wrap justify-center -m-4">
-      {data &&
+      {isLoading ? (
+        <>Loading...</>
+      ) : data.length == 0 ? (
+        <>Add Account Right Now it is Empty</>
+      ) : (
         data.map((item, key) => (
           <div className="xl:w-1/3 md:w-1/2 p-4" key={key}>
             <div className="border border-gray-200 p-6 rounded-lg">
@@ -40,7 +46,8 @@ export default function CredentialCard() {
               <p className="leading-relaxed text-sm">{item.description}</p>
             </div>
           </div>
-        ))}
+        ))
+      )}
     </div>
   );
 }

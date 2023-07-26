@@ -22,6 +22,8 @@ import CredentialCardField from "./components/CredentialCardField";
 import CredentialCardForm from "./components/CredentialCardForm";
 import CredentialWrapper from "./components/CredentialWrapper";
 import AddAccount from "./components/AddAccount";
+import UpdateAccount from "./components/EditAccount";
+import EditAccount from "./components/EditAccount";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -32,6 +34,7 @@ const router = createBrowserRouter(
       <Route path="" element={<PrivateRoute />}>
         <Route path="/profile" element={<ProfileScreen />} />
         <Route path="/add-account" element={<AddAccount />} />
+        <Route path="/edit-account/:id" element={<EditAccount  />} />
         <Route path="/credential/:id" element={<CredentialWrapper />} />
       </Route>
     </Route>
