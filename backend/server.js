@@ -29,7 +29,7 @@ app.use(cookieParser());
 // Middleware End
 
 // Routes Start
-app.use("/api/users", userRoutes);
+app.use("/api/user", userRoutes);
 // Routes End
 
 // app.get("*", (req, res) =>

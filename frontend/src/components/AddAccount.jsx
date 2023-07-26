@@ -7,16 +7,21 @@ import { toast } from "react-toastify";
 import { useCreateCredentialMutation } from "../slices/credentialSlice";
 
 export default function AddAccount() {
+  const { userInfo } = useSelector((state) => state.auth);
+
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
 
   const [credentialMutation] = useCreateCredentialMutation();
 
   const onSubmitHandler = async (data) => {
+    console.log(data);
+    data = { ...data, userid: userInfo._id };
+    console.log(data);
     if (data) {
       try {
         await credentialMutation(data).unwrap();
-        navigate("/");
+        navigate(`/user/${userInfo._id}`);
         // redirect("/");
         toast.success("Account Added Successfully");
       } catch (err) {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 import {
@@ -7,21 +7,25 @@ import {
 } from "../slices/credentialSlice";
 
 import { BsArrowLeft } from "react-icons/bs";
+import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
+import { useForm } from "react-hook-form";
 
 export default function CredentialCardField() {
   const navigate = useNavigate();
   const { id } = useParams();
 
   const { data, isLoading } = useGetCredentialsByIdQuery(id);
-
   const [deleteCredentialMutation] = useDeleteCredentialMutation();
 
   const deleteHandler = async () => {
     try {
       const res = await deleteCredentialMutation(id).unwrap();
-      navigate("/");
+      navigate(`/`);
+      toast.success(res.message);
     } catch (error) {}
   };
+
 
   return (
     <>
@@ -75,7 +79,7 @@ export default function CredentialCardField() {
                 <Link
                   className="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"
                   // onClick={() => stateToggler()}
-                  to={`/edit-account/${id}`}
+                  to={`/user/edit-account/${id}`}
                 >
                   Edit
                 </Link>

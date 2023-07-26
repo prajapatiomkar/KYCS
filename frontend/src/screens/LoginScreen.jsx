@@ -6,8 +6,6 @@ import { useLoginMutation } from "../slices/userSlice";
 import { toast } from "react-toastify";
 import { setCredentials } from "../slices/authSlice";
 
-
-
 export default function LoginScreen() {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
@@ -18,7 +16,7 @@ export default function LoginScreen() {
 
   useEffect(() => {
     if (userInfo) {
-      navigate("/");
+      navigate(`user/${userInfo._id}`);
     }
   }, [userInfo, navigate]);
 

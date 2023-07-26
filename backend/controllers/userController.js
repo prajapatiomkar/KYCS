@@ -111,8 +111,9 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 
 // {name: 'omkar', email: 'test@gmail.com', url: 'https://www.youtube.com/', password: 'omkar', description: 'omkar'}
 const createCredential = asyncHandler(async (req, res) => {
-  const { title, email, password, url, description } = req.body;
+  const { userid, title, email, password, url, description } = req.body;
   const credential = {
+    userid,
     title,
     email,
     password,
@@ -127,12 +128,14 @@ const createCredential = asyncHandler(async (req, res) => {
   }
 });
 
-const getCredential = asyncHandler(async (req, res) => {
-  const credentials = await credentialModel.find({});
+const getCredentials = asyncHandler(async (req, res) => {
+  const credentials = await credentialModel.find({
+    userid: Object(req.params.userid),
+  });
   if (credentials) {
     res.status(200).json(credentials);
   } else {
-    res.status(404).json({ message: "Credentials not found" });
+    res.status(404).json({ message: "Credentials not found getCredential" });
   }
 });
 
@@ -146,8 +149,7 @@ const getCredentialById = asyncHandler(async (req, res) => {
 });
 
 const deleteCredential = asyncHandler(async (req, res) => {
-  const id = req.params.id;
-  const result = await credentialModel.findByIdAndDelete(id);
+  const result = await credentialModel.findByIdAndDelete(req.params.id);
   if (result) {
     res.status(200).json({ result });
   }
@@ -160,7 +162,7 @@ export {
   getUserProfile,
   updateUserProfile,
   createCredential,
-  getCredential,
+  getCredentials,
   getCredentialById,
   deleteCredential,
 };

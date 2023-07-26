@@ -30,9 +30,9 @@ export default function RegisterScreen() {
     }
   };
 
-  useEffect(() => {
+  useEffect(  () => {
     if (userInfo) {
-      navigate("/");
+      navigate(`/user/${userInfo._id}`);
     }
   }, [navigate, userInfo]);
   return (

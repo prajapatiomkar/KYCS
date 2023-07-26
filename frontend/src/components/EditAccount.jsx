@@ -10,7 +10,7 @@ import {
 } from "../slices/credentialSlice";
 
 export default function EditAccount() {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, setValue } = useForm();
   const navigate = useNavigate();
 
   const [credentialMutation] = useCreateCredentialMutation();
@@ -32,6 +32,16 @@ export default function EditAccount() {
       toast.error("Please fill all the fields");
     }
   };
+
+  useEffect(() => {
+    if (data) {
+      setValue("title", data.title);
+      setValue("email", data.email);
+      setValue("url", data.url);
+      setValue("password", data.password);
+      setValue("description", data.description);
+    }
+  }, [data]);
 
   return (
     <>
@@ -56,7 +66,7 @@ export default function EditAccount() {
                   Title
                 </label>
                 <input
-                  value={data.title}
+                  // value={data.title}
                   {...register("title")}
                   type="text"
                   id="title"
@@ -72,7 +82,7 @@ export default function EditAccount() {
                   Email
                 </label>
                 <input
-                  value={data.email}
+                  // value={data.email}
                   {...register("email")}
                   type="email"
                   id="email"
@@ -88,7 +98,7 @@ export default function EditAccount() {
                   URL
                 </label>
                 <input
-                  value={data.url}
+                  // value={data.url}
                   {...register("url")}
                   type="text"
                   id="url"
@@ -104,7 +114,7 @@ export default function EditAccount() {
                   Password
                 </label>
                 <input
-                  value={data.password}
+                  // value={data.password}
                   {...register("password")}
                   type="password"
                   id="password"
@@ -120,7 +130,7 @@ export default function EditAccount() {
                   Description
                 </label>
                 <textarea
-                  value={data.description}
+                  // value={data.description}
                   {...register("description")}
                   type="text"
                   id="description"

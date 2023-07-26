@@ -9,33 +9,29 @@ import {
   getUserProfile,
   updateUserProfile,
   createCredential,
-  getCredential,
+  getCredentials,
   getCredentialById,
   deleteCredential,
 } from "../controllers/userController.js";
 import { protect } from "../middleware/authMiddleware.js";
 
 //Public Routes
-router.post("/", registerUser);
-router.post("/auth", authUser);
-
+router.post("/login", authUser);
+router.post("/register", registerUser);
 router.post("/logout", logoutUser);
+router.get("/:userid", getCredentials);
 
 //Private Routes
+
+router.post("/add-account", protect, createCredential);
+router.delete("/delete-account/:id", protect, deleteCredential);
+router.get("/view-account/:id", protect, getCredentialById);
+router.get("/edit-account/:id", protect, getCredentialById);
+
 router
   .route("/profile")
   .get(protect, getUserProfile)
+  .get(protect, getUserProfile)
   .put(protect, updateUserProfile);
-
-router
-  .route("/credential")
-  .get(protect, getCredential)
-  .post(protect, createCredential)
-  .delete(protect, deleteCredential);
-
-router
-  .route("/credential/:id")
-  .get(protect, getCredentialById)
-  .delete(protect, deleteCredential);
 
 export default router;

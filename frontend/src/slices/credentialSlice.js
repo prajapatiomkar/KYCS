@@ -4,25 +4,25 @@ export const credentialApi = createApi({
   reducerPath: "credentialApi",
   tagTypes: ["credential"],
   baseQuery: fetchBaseQuery({
-    baseUrl: "/api/users/credential",
+    baseUrl: "/api/user/",
   }),
   endpoints: (builder) => ({
     getAllCredentials: builder.query({
-      query: () => ({
-        url: "/",
+      query: (userid) => ({
+        url: `/${userid}`,
         method: "GET",
       }),
       providesTags: ["credential"],
     }),
     getCredentialsById: builder.query({
       query: (id) => ({
-        url: `/${id}`,
+        url: `/view-account/${id}`,
         method: "GET",
       }),
     }),
     createCredential: builder.mutation({
       query: (data) => ({
-        url: "/",
+        url: "/add-account",
         method: "POST",
         body: data,
       }),
@@ -30,7 +30,7 @@ export const credentialApi = createApi({
     }),
     deleteCredential: builder.mutation({
       query: (id) => ({
-        url: `/${id}`,
+        url: `/delete-account/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["credential"],

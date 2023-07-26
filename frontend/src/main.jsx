@@ -7,7 +7,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import store from "./store";
-import { Provider } from "react-redux";
+import { Provider, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 
 import App from "./App.jsx";
@@ -19,10 +19,7 @@ import ProfileScreen from "./screens/ProfileScreen.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx";
 import "react-toastify/dist/ReactToastify.css";
 import CredentialCardField from "./components/CredentialCardField";
-import CredentialCardForm from "./components/CredentialCardForm";
-import CredentialWrapper from "./components/CredentialWrapper";
 import AddAccount from "./components/AddAccount";
-import UpdateAccount from "./components/EditAccount";
 import EditAccount from "./components/EditAccount";
 
 const router = createBrowserRouter(
@@ -31,11 +28,12 @@ const router = createBrowserRouter(
       <Route index={true} path="/" element={<HomeScreen />} />
       <Route path="/login" element={<LoginScreen />} />
       <Route path="/register" element={<RegisterScreen />} />
+      <Route path="/user/:id" element={<HomeScreen />} />
       <Route path="" element={<PrivateRoute />}>
         <Route path="/profile" element={<ProfileScreen />} />
-        <Route path="/add-account" element={<AddAccount />} />
-        <Route path="/edit-account/:id" element={<EditAccount  />} />
-        <Route path="/credential/:id" element={<CredentialWrapper />} />
+        <Route path="/user/add-account" element={<AddAccount />} />
+        <Route path="/user/edit-account/:id" element={<EditAccount />} />
+        <Route path="/user/view-account/:id" element={<CredentialCardField />} />
       </Route>
     </Route>
   )
