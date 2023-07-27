@@ -32,9 +32,9 @@ export default function CredentialCard() {
         <>Add Account Right Now it is Empty</>
       ) : (
         data.map((item, key) => (
-          <div className="xl:w-auto md:w-auto w-auto p-4" key={key}>
-            <div className="border border-gray-200 px-6 py-5 rounded-lg">
-              <div className="flex items-center justify-between mb-3 w-auto ">
+          <div className="xl:w-auto md:w-auto w-auto " key={key}>
+            <div className="border border-gray-200 px-10 py-5 rounded-lg">
+              <div className="flex items-center justify-between   mb-3 w-auto ">
                 <h2 className="text-lg text-gray-900 font-medium title-font ">
                   {item.title}
                 </h2>

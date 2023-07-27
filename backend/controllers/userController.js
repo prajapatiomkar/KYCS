@@ -2,12 +2,16 @@ import asyncHandler from "express-async-handler";
 import userModel from "../models/userModel.js";
 import generateToken from "../utils/generateToken.js";
 import credentialModel from "../models/credentialModel.js";
+import passwordEncrypt from "../utils/passwordEncrypt.js";
+import credentialEncrypt from "../utils/encryptCredential.js";
+import { decrypt, encrypt } from "../utils/credential.js";
 
 // @desc   Auth user / Set token
 // @route  Post /api/users/auth
 // @access Public
 const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
+  req.session.password = password;
 
   if (!email || !password) {
     res.status(400).json({ message: "Please enter all fields" });
@@ -32,6 +36,7 @@ const authUser = asyncHandler(async (req, res) => {
 // @access Public
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
+  req.session.password = password;
   const userExists = await userModel.findOne({ email });
 
   if (userExists) {
@@ -111,7 +116,11 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 
 // {name: 'omkar', email: 'test@gmail.com', url: 'https://www.youtube.com/', password: 'omkar', description: 'omkar'}
 const createCredential = asyncHandler(async (req, res) => {
-  const { userid, title, email, password, url, description } = req.body;
+  let { userid, title, email, password, url, description } = req.body;
+  // const encryptedPassword = await passwordEncrypt(password);
+  // password = await credentialEncrypt(password, encryptedPassword);
+  password = encrypt(password);
+
   const credential = {
     userid,
     title,
@@ -141,8 +150,10 @@ const getCredentials = asyncHandler(async (req, res) => {
 
 const getCredentialById = asyncHandler(async (req, res) => {
   const credential = await credentialModel.findById(req.params.id);
+  const decryptedPassword = decrypt(credential.password);
+  credential.password = decryptedPassword;
   if (credential) {
-    res.status(200).json(credential);
+    res.status(200).json( credential);
   } else {
     res.status(404).json({ message: "Credential not found" });
   }
