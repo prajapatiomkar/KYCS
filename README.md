@@ -14,5 +14,5 @@ KYCS - Keep Your Credential Safe
 #### 4) To run frontend 
     cd frontend/ && npm run dev
 #### 4) To run backend 
-    cd frontend/ && npm run server
+    cd backend/ && npm run server
 
