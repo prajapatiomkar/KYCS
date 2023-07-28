@@ -26,22 +26,22 @@ export default function Header() {
   };
 
   return (
-    <header className="">
+    <header className=" text-sm ">
       {userInfo ? (
         <>
           {/* <div className="flex gap-6"> */}
-          <div className="flex justify-between p-5 items-center text-lg">
+          <div className="flex justify-between p-5 items-center text-sm sm:text-lg">
             <div className="">
               <Link to={`/user/${userInfo._id}`} className=" ">
                 KYCS
               </Link>
             </div>
-            <div className=" flex gap-6">
+            <div className=" flex gap-4">
               <Link to={`/user/${userInfo._id}`} className="text-gray-700 ">
                 Home
               </Link>
               <Link to="/user/add-account" className="text-gray-700">
-                Add Account
+                Add&nbsp;Account 
               </Link>
               <Link className="text-gray-700 " onClick={logoutHandler}>
                 Logout
@@ -52,13 +52,13 @@ export default function Header() {
         </>
       ) : (
         <>
-          <div className="flex justify-between p-5 items-center text-lg">
+          <div className="flex justify-between p-5 items-center text-sm sm:text-lg">
             <div className="">
               <Link to="/" className=" ">
                 KYCS
               </Link>
             </div>
-            <div className="flex gap-6">
+            <div className="flex gap-4">
               <Link to="/login" className="text-gray-700 ">
                 Login
               </Link>
