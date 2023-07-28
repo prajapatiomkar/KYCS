@@ -28,7 +28,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // Middleware End
-
 // Routes Start
 app.use("/api/user", userRoutes);
 // Routes End
