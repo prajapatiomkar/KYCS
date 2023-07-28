@@ -33,21 +33,21 @@ app.use(cookieParser());
 app.use("/api/user", userRoutes);
 // Routes End
 
-// app.get("*", (req, res) =>
-//   res.sendFile(path.resolve(__dirname, "dist", "index.html"))
-// );
+app.get("*", (req, res) =>
+  res.sendFile(path.resolve(__dirname, "dist", "index.html"))
+);
 
-if (process.env.NODE_ENV === "production") {
-  const __dirname = path.resolve();
-  app.use(express.static(path.join(__dirname, "/dist")));
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "dist", "index.html"));
-  });
-} else {
-  app.get("/", (req, res) => {
-    res.send("API is running...");
-  });
-}
+// if (process.env.NODE_ENV === "production") {
+//   const __dirname = path.resolve();
+//   app.use(express.static(path.join(__dirname, "/dist")));
+//   app.get("*", (req, res) => {
+//     res.sendFile(path.resolve(__dirname, "dist", "index.html"));
+//   });
+// } else {
+//   app.get("/", (req, res) => {
+//     res.send("API is running...");
+//   });
+// }
 
 app.use(notFound);
 app.use(errorHandler);
