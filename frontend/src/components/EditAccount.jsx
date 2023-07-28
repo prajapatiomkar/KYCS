@@ -1,35 +1,38 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 import {
-  useCreateCredentialMutation,
+  useUpdateCredentialMutation,
   useGetCredentialsByIdQuery,
 } from "../slices/credentialSlice";
 
 export default function EditAccount() {
   const { register, handleSubmit, setValue } = useForm();
   const navigate = useNavigate();
-
-  const [credentialMutation] = useCreateCredentialMutation();
+  const { userInfo } = useSelector((state) => state.auth);
 
   const { id } = useParams();
+  const [credentialMutation] = useUpdateCredentialMutation();
 
   const { data, isLoading } = useGetCredentialsByIdQuery(id);
+  const [showPasswordToggler, setShowPasswordToggler] = useState(false);
 
   const onSubmitHandler = async (data) => {
+    data = { ...data, _id: id };
     if (data) {
       try {
         await credentialMutation(data).unwrap();
         navigate("/");
-        toast.success("Account Added Successfully");
+        toast.success("Account Edited Successfully");
       } catch (err) {
         toast.error(err?.data?.message || err.error);
       }
     } else {
-      toast.error("Please fill all the fields");
+      toast.error("Please Fill All Fields");
     }
   };
 
@@ -40,6 +43,7 @@ export default function EditAccount() {
       setValue("url", data.url);
       setValue("password", data.password);
       setValue("description", data.description);
+      setValue("userid", data.userid);
     }
   }, [data]);
 
@@ -66,7 +70,6 @@ export default function EditAccount() {
                   Title
                 </label>
                 <input
-                  // value={data.title}
                   {...register("title")}
                   type="text"
                   id="title"
@@ -82,7 +85,6 @@ export default function EditAccount() {
                   Email
                 </label>
                 <input
-                  // value={data.email}
                   {...register("email")}
                   type="email"
                   id="email"
@@ -98,7 +100,6 @@ export default function EditAccount() {
                   URL
                 </label>
                 <input
-                  // value={data.url}
                   {...register("url")}
                   type="text"
                   id="url"
@@ -106,22 +107,38 @@ export default function EditAccount() {
                   className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                 />
               </div>
-              <div className="relative mb-4">
+
+              <div className="relative mb-4 ">
                 <label
                   htmlFor="password"
                   className="leading-7 text-sm text-gray-600"
                 >
                   Password
                 </label>
-                <input
-                  // value={data.password}
-                  {...register("password")}
-                  type="password"
-                  id="password"
-                  name="password"
-                  className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                />
+                <div className="flex items-center gap-6">
+                  <input
+                    {...register("password")}
+                    type={showPasswordToggler ? "text" : "password"}
+                    // value={data.password}
+                    id="password"
+                    name="password"
+                    className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                  />
+                  <div
+                    className=""
+                    onClick={() => {
+                      setShowPasswordToggler((prev) => !prev);
+                    }}
+                  >
+                    {showPasswordToggler ? (
+                      <AiOutlineEyeInvisible size={25} />
+                    ) : (
+                      <AiOutlineEye size={25} />
+                    )}
+                  </div>
+                </div>
               </div>
+
               <div className="relative mb-4">
                 <label
                   htmlFor="description"
@@ -130,7 +147,6 @@ export default function EditAccount() {
                   Description
                 </label>
                 <textarea
-                  // value={data.description}
                   {...register("description")}
                   type="text"
                   id="description"

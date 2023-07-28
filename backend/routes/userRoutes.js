@@ -12,6 +12,7 @@ import {
   getCredentials,
   getCredentialById,
   deleteCredential,
+  updateCredential,
 } from "../controllers/userController.js";
 import { protect } from "../middleware/authMiddleware.js";
 
@@ -27,6 +28,7 @@ router.post("/add-account", protect, createCredential);
 router.delete("/delete-account/:id", protect, deleteCredential);
 router.get("/view-account/:id", protect, getCredentialById);
 router.get("/edit-account/:id", protect, getCredentialById);
+router.put("/edit-account/:id", protect, updateCredential );
 
 router
   .route("/profile")

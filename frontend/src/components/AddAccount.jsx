@@ -15,9 +15,9 @@ export default function AddAccount() {
   const [credentialMutation] = useCreateCredentialMutation();
 
   const onSubmitHandler = async (data) => {
-    console.log(data);
+
     data = { ...data, userid: userInfo._id };
-    console.log(data);
+  
     if (data) {
       try {
         await credentialMutation(data).unwrap();

@@ -11,7 +11,6 @@ import { decrypt, encrypt } from "../utils/credential.js";
 // @access Public
 const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-  req.session.password = password;
 
   if (!email || !password) {
     res.status(400).json({ message: "Please enter all fields" });
@@ -36,7 +35,6 @@ const authUser = asyncHandler(async (req, res) => {
 // @access Public
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
-  req.session.password = password;
   const userExists = await userModel.findOne({ email });
 
   if (userExists) {
@@ -57,7 +55,7 @@ const registerUser = asyncHandler(async (req, res) => {
       email: user.email,
     });
   } else {
-    res.status(400).json({ message: "Invalid user data" });
+    res.status(404).json({ message: "Invalid user data" });
   }
 });
 
@@ -149,14 +147,40 @@ const getCredentials = asyncHandler(async (req, res) => {
 });
 
 const getCredentialById = asyncHandler(async (req, res) => {
-  const credential = await credentialModel.findById(req.params.id);
+  const credential = await credentialModel.findById({ _id: req.params.id });
   const decryptedPassword = decrypt(credential.password);
   credential.password = decryptedPassword;
   if (credential) {
-    res.status(200).json( credential);
+    res.status(200).json(credential);
   } else {
     res.status(404).json({ message: "Credential not found" });
   }
+});
+
+const updateCredential = asyncHandler(async (req, res) => {
+  const { title, email, password, url, description } = req.body;
+
+  try {
+    const updated = await credentialModel.findOneAndUpdate(
+      { _id: Object(req.params.id) },
+      {
+        $set: {
+          title: title,
+          email: email,
+          password: password,
+          url: url,
+          description: description,
+        },
+      },
+      { new: true }
+    );
+    res.status(200).json({
+      updateCredential: updated,
+    });
+  } catch (error) {
+    res.status(404).json({ error: error });
+  }
+
 });
 
 const deleteCredential = asyncHandler(async (req, res) => {
@@ -176,4 +200,5 @@ export {
   getCredentials,
   getCredentialById,
   deleteCredential,
+  updateCredential,
 };

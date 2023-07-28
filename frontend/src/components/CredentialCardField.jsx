@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 import {
   useDeleteCredentialMutation,
@@ -26,6 +28,14 @@ export default function CredentialCardField() {
     } catch (error) {}
   };
 
+  const [showPasswordToggler, setShowPasswordToggler] = useState(false);
+  const { register, setValue } = useForm();
+
+  useEffect(() => {
+    setValue("email", data?.email);
+    setValue("password", data?.password);
+  }, [data]);
+
   return (
     <>
       {data && (
@@ -50,28 +60,44 @@ export default function CredentialCardField() {
                   Email
                 </label>
                 <input
-                  value={data.email}
-                  // value={}
+                  {...register("email")}
                   type="email"
                   id="email"
                   name="email"
                   className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                 />
               </div>
-              <div className="relative mb-4">
-                <label
-                  htmlFor="password"
-                  className="leading-7 text-sm text-gray-600"
-                >
-                  Password
-                </label>
-                <input
-                  value={data.password}
-                  type="password"
-                  id="password"
-                  name="password"
-                  className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                />
+              <div className=" relative mb-4">
+                <div className="">
+                  <label
+                    htmlFor="password"
+                    className="leading-7 text-sm text-gray-600"
+                  >
+                    Password
+                  </label>
+                  <div className="flex items-center gap-6">
+                    <input
+                      {...register("password")}
+                      type={showPasswordToggler ? "text" : "password"}
+                      // value={data.password}
+                      id="password"
+                      name="password"
+                      className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                    />
+                    <div
+                      className=""
+                      onClick={() => {
+                        setShowPasswordToggler((prev) => !prev);
+                      }}
+                    >
+                      {showPasswordToggler ? (
+                        <AiOutlineEyeInvisible size={25} />
+                      ) : (
+                        <AiOutlineEye size={25} />
+                      )}
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <div className="flex gap-5">

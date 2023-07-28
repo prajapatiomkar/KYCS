@@ -18,12 +18,10 @@ export default function CredentialCard() {
   const { data, isLoading, isError, isSuccess } = useGetAllCredentialsQuery(
     userInfo._id
   );
-  console.log(userInfo._id);
   const expandHandle = (id) => {
     navigation(`/user/view-account/${id}`);
   };
 
-  console.log(data);
   return (
     <div className="flex flex-wrap justify-center -m-4">
       {isLoading ? (
@@ -32,9 +30,9 @@ export default function CredentialCard() {
         <>Add Account Right Now it is Empty</>
       ) : (
         data.map((item, key) => (
-          <div className="xl:w-auto md:w-auto w-auto " key={key}>
-            <div className="border border-gray-200 px-10 py-5 rounded-lg">
-              <div className="flex items-center justify-between   mb-3 w-auto ">
+          <div className=" xl:w-auto md:w-auto w-auto " key={key}>
+            <div className=" border border-gray-200 px-10 m-2 py-5 rounded-lg">
+              <div className="flex items-center justify-between flex-wrap   mb-3 w-auto ">
                 <h2 className="text-lg text-gray-900 font-medium title-font ">
                   {item.title}
                 </h2>
