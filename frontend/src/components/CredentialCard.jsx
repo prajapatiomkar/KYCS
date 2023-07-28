@@ -23,7 +23,7 @@ export default function CredentialCard() {
   };
 
   return (
-    <div className="flex flex-wrap justify-center -m-4">
+    <div className="flex flex-wrap justify-center -m-4 text-sm md:text-lg ">
       {isLoading ? (
         <>Loading...</>
       ) : data?.length == 0 ? (
@@ -33,7 +33,7 @@ export default function CredentialCard() {
           <div className=" xl:w-auto md:w-auto w-auto " key={key}>
             <div className=" border border-gray-200 px-10 m-2 py-5 rounded-lg">
               <div className="flex items-center justify-between flex-wrap   mb-3 w-auto ">
-                <h2 className="text-lg text-gray-900 font-medium title-font ">
+                <h2 className=" text-gray-900 font-medium title-font text-lg md:text-xl ">
                   {item.title}
                 </h2>
                 <BsArrowsAngleExpand
@@ -42,9 +42,9 @@ export default function CredentialCard() {
                   onClick={() => expandHandle(item._id)}
                 />
               </div>
-              <p className="leading-relaxed text-lg">{item.email}</p>
+              <p className="leading-relaxed ">{item.email}</p>
 
-              <p className="leading-relaxed text-sm">{item.description}</p>
+              <p className="leading-relaxed ">{item.description}</p>
             </div>
           </div>
         ))
